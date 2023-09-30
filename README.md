@@ -68,6 +68,7 @@ Welcome to `EXPO CHAT APP`. This guide will help you get started with the projec
 - [x] App created
 - [ ] Add validation
 - [ ] Prepare signalr url
+- [ ] Prepare readmd file
 - [ ] Unit test with coverage report
 
 
