@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, View, Platform, Text, Alert, TouchableOpacity } from "react-native";
+import { Image, View, Platform, Text, Alert, Pressable } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from "expo-image-manipulator";
 import Styles from "./Styles";
@@ -98,14 +98,14 @@ const ImageChooser = (props: ImageChooserProps) => {
         <View style={Styles.uploadImgContainer}>
             {Platform.OS !== 'web' ? (
                 // Content to display when the platform is not "web"
-                <TouchableOpacity style={Styles.uploadImgBtn} onPress={pickImage} >
+                <Pressable style={Styles.uploadImgBtn} onPress={pickImage} >
                     <Text style={Styles.uploadImgBtnTxt}>Pick an image</Text>
-                </TouchableOpacity>
+                </Pressable>
             ) : (
                 // Content to display when the platform is "web" 
-                <TouchableOpacity style={Styles.uploadImgBtn} onPress={uploadImageFile} >
+                <Pressable style={Styles.uploadImgBtn} onPress={uploadImageFile} >
                     <Text style={Styles.uploadImgBtnTxt}>Pick an image</Text>
-                </TouchableOpacity>
+                </Pressable>
             )}
             {avatarImg ? (
                 <Image
