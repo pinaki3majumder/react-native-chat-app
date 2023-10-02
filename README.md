@@ -13,12 +13,14 @@ Welcome to `EXPO CHAT APP`. This guide will help you get started with the projec
 
 
 ### Built With
-* 
-* 
-* 
-* 
-* 
-* 
+* React Native
+* Expo
+* Node JS
+* Express JS
+* socket.io
+* react-native-async-storage
+* Typescript
+* VS Code
 
 
 ## Prerequisites
