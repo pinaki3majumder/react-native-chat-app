@@ -24,6 +24,8 @@ export default function App() {
     setImage(image);
   };
 
+  AsyncStorage.clear();
+
   const onSubmitPersonalInfo = async (name: string, image: string) => {
     setName(name);
     await AsyncStorage.setItem(storageUserNameKey, name);

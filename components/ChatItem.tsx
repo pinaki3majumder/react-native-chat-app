@@ -35,8 +35,8 @@ const RenderChatItem = ({ chatItem, username }: Props) => {
         <Animated.View
             style={[
                 Styles.flatListItem,
-                { borderColor: username == chatItem.by ? "#f1f3f5" : "blue" },
-                { backgroundColor: username == chatItem.by ? "#fafcff" : "#4399ff" },
+                { borderColor: username == chatItem.by ? "#dad6d6" : "#72a6e4" },
+                { backgroundColor: username == chatItem.by ? "#f5f2f2" : "#9cc0ea" },
                 { opacity: animatedValue },
                 { transform: [{ scale: animatedValue }] },
             ]}

@@ -3,6 +3,7 @@ import { Image, View, Platform, Text, Alert, TouchableOpacity } from "react-nati
 import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from "expo-image-manipulator";
 import Styles from "./Styles";
+import { Button } from "react-native";
 
 type ImageChooserProps = {
     onChangeImage: (image: string) => void;
@@ -81,11 +82,31 @@ const ImageChooser = (props: ImageChooserProps) => {
         props.onChangeImage(imageBase64);
     }
 
+    const uploadImageFile = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [1, 1],
+        });
+
+        if (!result.canceled) {
+            resizeImg(result);
+        }
+    };
+
     return (
         <View style={Styles.uploadImgContainer}>
-            <TouchableOpacity style={Styles.uploadImgBtn} onPress={pickImage} >
-                <Text style={Styles.uploadImgBtnTxt}>Pick an image</Text>
-            </TouchableOpacity>
+            {Platform.OS !== 'web' ? (
+                // Content to display when the platform is not "web"
+                <TouchableOpacity style={Styles.uploadImgBtn} onPress={pickImage} >
+                    <Text style={Styles.uploadImgBtnTxt}>Pick an image</Text>
+                </TouchableOpacity>
+            ) : (
+                // Content to display when the platform is "web" 
+                <TouchableOpacity style={Styles.uploadImgBtn} onPress={uploadImageFile} >
+                    <Text style={Styles.uploadImgBtnTxt}>Pick an image</Text>
+                </TouchableOpacity>
+            )}
             {avatarImg ? (
                 <Image
                     resizeMode="cover"

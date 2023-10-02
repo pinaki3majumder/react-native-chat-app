@@ -44,15 +44,28 @@ Welcome to `EXPO CHAT APP`. This guide will help you get started with the projec
   ```
 
 ## Deployment
-* Run the below command to start this project
+### BackEnd
+* Run the below command to start server (path - react-native-chat-app/server)
 
   ```bash
-  
+  npm start
   ```
 
 * Enter the below URL in the browser
   ```bash
-  
+  http://localhost:3000/
+  ```
+
+### FrontEnd
+* Run the below command to start this project (path - react-native-chat-app)
+
+  ```bash
+  expo start --web
+  ```
+
+* Enter the below URL in the browser
+  ```bash
+  http://localhost:19006/
   ```
 
 

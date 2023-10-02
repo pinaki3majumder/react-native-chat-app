@@ -8,34 +8,53 @@ import {
     Pressable,
     ListRenderItem,
 } from "react-native";
-import Socket from "./WebSocket";
+import SocketIOClient from 'socket.io-client';
 
 type ChatProps = {
     userName: string,
     avatarImg: string
 }
 
+const socket = SocketIOClient('http://localhost:3000');
+
 const Chat = ({ userName, avatarImg }: ChatProps) => {
     let [chatInput, setChatInput] = useState("");
     let [chatItemList, setChatItemList] = useState<ChatItem[]>([]);
 
     useEffect(() => {
-        (async () => {
-            try {
-                if (Socket.state == "Disconnected") {
-                    await Socket.start();
-                }
-            } catch (err) {
-                console.log(err);
-            }
-        })();
-        Socket.on("ReceiveMessage", (chatItem) => {
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected from server');
+        });
+
+        socket.on('chat message', (chatItem) => {
             setChatItemList((chatItemList) => {
                 if (chatItemList.find((i) => i.id == chatItem.id)) return chatItemList;
                 return [...chatItemList, chatItem];
             });
         });
+
+        return () => {
+            socket.disconnect(); // Disconnect when the component unmounts
+        };
     }, []);
+
+    const sendMessage = () => {
+        if (chatInput) {
+            const chatData = {
+                id: Math.random().toString(36).substring(7),
+                text: chatInput,
+                by: userName,
+                image: avatarImg,
+                timeStamp: Date.now(),
+            };
+            socket.emit('chat message', chatData); // Send the message to the server
+            setChatInput(''); // Clear the message input field
+        }
+    };
 
     const renderItem: ListRenderItem<ChatItem> = ({ item }) => (
         <RenderChatItem chatItem={item} username={userName}></RenderChatItem>
@@ -59,18 +78,8 @@ const Chat = ({ userName, avatarImg }: ChatProps) => {
 
                 <Pressable
                     style={Styles.chatBtn}
-                    onPress={() => {
-                        async () => {
-                            await Socket.invoke("SendMessage", {
-                                id: Math.random().toString(36).substring(7),
-                                text: chatInput,
-                                by: userName,
-                                image: avatarImg,
-                                timeStamp: Date.now(),
-                            });
-                            setChatInput("");
-                        }
-                    }}>
+                    onPress={sendMessage}
+                >
                     <Text style={Styles.chatBtnText}>Send</Text>
                 </Pressable>
             </View>
